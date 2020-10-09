@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.yan.ahtbibleaudio001">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,8 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".views.activities.NavigationDemoActivity"></activity>
+        <activity android:name=".views.activities.NavigationDemoActivity"/>
         <activity android:name=".views.activities.PlayAudioActivity" />
+        <activity android:name=".views.activities.MainActivity" />
         <activity android:name=".views.activities.AudioActivity" />
         <activity android:name=".views.activities.SingleMovieActivity" />
         <activity android:name=".views.activities.MovieActivity" />
@@ -27,6 +29,17 @@
         </activity>
 
         <service android:name=".zutil000.AudioPlayerService" />
+
+        <service
+            android:name="com.example.android.uamp.media.MusicService"
+            android:enabled="true"
+            android:exported="true"
+            tools:ignore="ExportedService">
+
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

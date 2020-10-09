@@ -42,7 +42,9 @@ class MainActivityViewModel(
      * are notified of the change as usual with [LiveData], but only one [Observer]
      * will actually read the data. For more information, check the [Event] class.
      */
+    val navigateToMediaItem1: LiveData<Event<String>> get() = _navigateToMediaItem1
     val navigateToMediaItem: LiveData<Event<String>> get() = _navigateToMediaItem
+    private val _navigateToMediaItem1 = MutableLiveData<Event<String>>()
     private val _navigateToMediaItem = MutableLiveData<Event<String>>()
 
     /**
@@ -88,7 +90,8 @@ class MainActivityViewModel(
      * observer in [MainActivity].
      */
     private fun browseToItem(mediaItem: MediaItemData) {
-        _navigateToMediaItem.value = Event(mediaItem.mediaId)
+//        _navigateToMediaItem.value = Event(mediaItem.mediaId)
+        _navigateToMediaItem1.value = Event(mediaItem.mediaId)
     }
 
     /**

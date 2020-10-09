@@ -121,6 +121,7 @@ class MusicServiceConnection(context: Context, serviceComponent: ComponentName) 
          * Invoked when the client is disconnected from the media browser.
          */
         override fun onConnectionSuspended() {
+            Log.d("Blah","onConnectionSuspended")
             isConnected.postValue(false)
         }
 

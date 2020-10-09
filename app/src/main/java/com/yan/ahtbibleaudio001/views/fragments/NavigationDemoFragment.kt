@@ -122,96 +122,96 @@ class NavigationDemoFragment : Fragment() {
         navigation_rv.setHasFixedSize(true)
 
         // Add Item Touch Listener
-        navigation_rv.addOnItemTouchListener(
-            RecyclerTouchListener(
-                requireActivity(),
-                object : ClickListener {
-                    override fun onClick(view: View, position: Int) {
-                        when (position) {
-                            0 -> {
-                                // # Home Fragment
-//                        supportActionBar?.title = "Home Fragment"
-                                (activity as AppCompatActivity).supportActionBar?.title = "Home Fragment"
-                                val bundle = Bundle()
-                                bundle.putString("fragmentName", "Home Fragment")
-                                val homeFragment = AudioCatFragment()
-                                homeFragment.arguments = bundle
-                                requireActivity().supportFragmentManager.beginTransaction()
-                                    .replace(R.id.activity_audio_content_id, homeFragment).commit()
-                            }
-                            1 -> {
-//                                activity.supportFragmentManager.beginTransaction().remove().commit()
-                                // # Music Fragment
-//                        supportActionBar?.title = "Music Fragment"
-                                (activity as AppCompatActivity).supportActionBar?.title = "Music Fragment"
-                                val bundle = Bundle()
-                                bundle.putString("fragmentName", "Music Fragment")
-                                val musicFragment = AudioCatFragment()
-                                musicFragment.arguments = bundle
-                                requireActivity().supportFragmentManager.beginTransaction()
-                                    .replace(R.id.activity_audio_content_id, musicFragment).commit()
-                            }
-//                            2 -> {
-////                        supportActionBar?.title = "Movies Fragment"
-//                                // # Movies Fragment
+//        navigation_rv.addOnItemTouchListener(
+//            RecyclerTouchListener(
+//                requireActivity(),
+//                object : ClickListener {
+//                    override fun onClick(view: View, position: Int) {
+//                        when (position) {
+//                            0 -> {
+//                                // # Home Fragment
+////                        supportActionBar?.title = "Home Fragment"
+//                                (activity as AppCompatActivity).supportActionBar?.title = "Home Fragment"
 //                                val bundle = Bundle()
-//                                bundle.putString("fragmentName", "Movies Fragment")
-//                                val moviesFragment = AudioCatFragment()
-//                                moviesFragment.arguments = bundle
+//                                bundle.putString("fragmentName", "Home Fragment")
+//                                val homeFragment = AudioCatFragment()
+//                                homeFragment.arguments = bundle
 //                                requireActivity().supportFragmentManager.beginTransaction()
-//                                    .replace(R.id.activity_audio_content_id, moviesFragment)
-//                                    .commit()
+//                                    .replace(R.id.activity_audio_content_id, homeFragment).commit()
 //                            }
-//                            3 -> {
-////                        supportActionBar?.title = "Books Fragment"
-//                                // # Books Fragment
+//                            1 -> {
+////                                activity.supportFragmentManager.beginTransaction().remove().commit()
+//                                // # Music Fragment
+////                        supportActionBar?.title = "Music Fragment"
+//                                (activity as AppCompatActivity).supportActionBar?.title = "Music Fragment"
 //                                val bundle = Bundle()
-//                                bundle.putString("fragmentName", "Books Fragment")
-//                                val booksFragment = AudioCatFragment()
-//                                booksFragment.arguments = bundle
+//                                bundle.putString("fragmentName", "Music Fragment")
+//                                val musicFragment = AudioCatFragment()
+//                                musicFragment.arguments = bundle
 //                                requireActivity().supportFragmentManager.beginTransaction()
-//                                    .replace(R.id.activity_audio_content_id, booksFragment).commit()
+//                                    .replace(R.id.activity_audio_content_id, musicFragment).commit()
 //                            }
-//                            4 -> {
-////                        supportActionBar?.title = "Profile Fragment"
-//                                // # Books Fragment
-//                                val bundle = Bundle()
-//                                bundle.putString("fragmentName", "Profile Fragment")
-//                                val profileFragment = AudioCatFragment()
-//                                profileFragment.arguments = bundle
-//                                requireActivity().supportFragmentManager.beginTransaction()
-//                                    .replace(R.id.activity_audio_content_id, profileFragment)
-//                                    .commit()
-//                            }
-//                            5 -> {
-//                                // # Settings Fragment
-//                                val bundle = Bundle()
-//                                bundle.putString("fragmentName", "Settings Fragment")
-//                                val settingsFragment = AudioCatFragment()
-//                                settingsFragment.arguments = bundle
-//                                requireActivity().supportFragmentManager.beginTransaction()
-//                                    .replace(R.id.activity_audio_content_id, settingsFragment)
-//                                    .commit()
-//                            }
-//                            6 -> {
-//                                // # Open URL in browser
-//                                val uri: Uri = Uri.parse("https://johnc.co/fb")
-//                                val intent = Intent(Intent.ACTION_VIEW, uri)
-//                                startActivity(intent)
-//                            }
-                        }
-//                        // Don't highlight the 'Profile' and 'Like us on Facebook' item row
-//                        if (position != 6 && position != 4) {
-//                            updateAdapter(position)
+////                            2 -> {
+//////                        supportActionBar?.title = "Movies Fragment"
+////                                // # Movies Fragment
+////                                val bundle = Bundle()
+////                                bundle.putString("fragmentName", "Movies Fragment")
+////                                val moviesFragment = AudioCatFragment()
+////                                moviesFragment.arguments = bundle
+////                                requireActivity().supportFragmentManager.beginTransaction()
+////                                    .replace(R.id.activity_audio_content_id, moviesFragment)
+////                                    .commit()
+////                            }
+////                            3 -> {
+//////                        supportActionBar?.title = "Books Fragment"
+////                                // # Books Fragment
+////                                val bundle = Bundle()
+////                                bundle.putString("fragmentName", "Books Fragment")
+////                                val booksFragment = AudioCatFragment()
+////                                booksFragment.arguments = bundle
+////                                requireActivity().supportFragmentManager.beginTransaction()
+////                                    .replace(R.id.activity_audio_content_id, booksFragment).commit()
+////                            }
+////                            4 -> {
+//////                        supportActionBar?.title = "Profile Fragment"
+////                                // # Books Fragment
+////                                val bundle = Bundle()
+////                                bundle.putString("fragmentName", "Profile Fragment")
+////                                val profileFragment = AudioCatFragment()
+////                                profileFragment.arguments = bundle
+////                                requireActivity().supportFragmentManager.beginTransaction()
+////                                    .replace(R.id.activity_audio_content_id, profileFragment)
+////                                    .commit()
+////                            }
+////                            5 -> {
+////                                // # Settings Fragment
+////                                val bundle = Bundle()
+////                                bundle.putString("fragmentName", "Settings Fragment")
+////                                val settingsFragment = AudioCatFragment()
+////                                settingsFragment.arguments = bundle
+////                                requireActivity().supportFragmentManager.beginTransaction()
+////                                    .replace(R.id.activity_audio_content_id, settingsFragment)
+////                                    .commit()
+////                            }
+////                            6 -> {
+////                                // # Open URL in browser
+////                                val uri: Uri = Uri.parse("https://johnc.co/fb")
+////                                val intent = Intent(Intent.ACTION_VIEW, uri)
+////                                startActivity(intent)
+////                            }
 //                        }
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            //Your Code
-                            drawerLayout.closeDrawer(GravityCompat.START)
-
-                        }, 200)
-                    }
-                })
-        )
+////                        // Don't highlight the 'Profile' and 'Like us on Facebook' item row
+////                        if (position != 6 && position != 4) {
+////                            updateAdapter(position)
+////                        }
+//                        Handler(Looper.getMainLooper()).postDelayed({
+//                            //Your Code
+//                            drawerLayout.closeDrawer(GravityCompat.START)
+//
+//                        }, 200)
+//                    }
+//                })
+//        )
 
         // Update Adapter with item data and highlight the default menu item ('Home' Fragment)
 //        updateAdapter(0)
@@ -295,16 +295,16 @@ class NavigationDemoFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         // Always true, but lets lint know that as well.
-//        mediaId = arguments?.getString(MEDIA_ID_ARG_1) ?: return
-        mediaId = "__ALBUMS__"
+        mediaId = arguments?.getString(MEDIA_ID_ARG_1) ?: return
+//        mediaId = "__ALBUMS__"
 
-        Log.d("MEDIAID", mediaId)
+        Log.d("Blah","onActivityCreated " +mediaId)
 
         mediaItemFragmentViewModel.mediaItems.observe(viewLifecycleOwner,
             Observer { list ->
                 binding.loadingSpinner.visibility =
                     if (list?.isNotEmpty() == true) View.GONE else View.VISIBLE
-                Log.d("Blah","fdsfafdsf")
+                Log.d("Blah","loadingspinner" + list)
                 listAdapter.submitList(list)
 
             })

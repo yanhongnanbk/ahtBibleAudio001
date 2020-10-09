@@ -121,7 +121,7 @@ open class MusicService : MediaBrowserServiceCompat() {
 //    private val remoteJsonSource: Uri =
 //        Uri.parse("http://172.16.1.91:3000/api/v1/audio/list?page=1")
     private val remoteJsonSource: Uri =
-        Uri.parse("https://api.themoviedb.org/3/movie/popular?api_key=6e63c2317fbe963d76c3bdc2b785f6d1")
+        Uri.parse("http://demo6153500.mockable.io/podcast")
     private val uAmpAudioAttributes = AudioAttributes.Builder()
         .setContentType(C.CONTENT_TYPE_MUSIC)
         .setUsage(C.USAGE_MEDIA)

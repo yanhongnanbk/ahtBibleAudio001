@@ -53,13 +53,19 @@ class NavigationDemoActivity : AppCompatActivity() {
             Observer<String> { rootMediaId ->
                 Log.d("Blah","root media id ="+rootMediaId)
 
-                rootMediaId?.let { navigateToMediaItem(it) }
+                rootMediaId?.let { navigateToMediaItem("__ALBUMS__") }
             })
 
         /**
          * Observe [MainActivityViewModel.navigateToMediaItem] for [Event]s indicating
          * the user has requested to browse to a different [MediaItemData].
          */
+        viewModel.navigateToMediaItem1.observe(this, Observer {
+            it?.getContentIfNotHandled()?.let { mediaId ->
+                navigateToMediaItem1(mediaId)
+            }
+        })
+
         viewModel.navigateToMediaItem.observe(this, Observer {
             it?.getContentIfNotHandled()?.let { mediaId ->
                 navigateToMediaItem(mediaId)
@@ -80,7 +86,25 @@ class NavigationDemoActivity : AppCompatActivity() {
         }
     }
 
-    private fun isRootId(mediaId: String) = mediaId == viewModel.rootMediaId.value
+    private fun navigateToMediaItem1(mediaId: String) {
+        var fragment: MediaItemFragment? = getBrowseFragment1(mediaId)
+        if (fragment == null) {
+            Log.d("Blah","Navigate to DemoFragment")
+
+//            fragment = MediaItemFragment.newInstance("__ALBUMS__")
+            fragment = MediaItemFragment.newInstance(mediaId)
+            // If this is not the top level media (root), we add it to the fragment
+            // back stack, so that actionbar toggle and Back will work appropriately:
+            viewModel.showFragment(fragment, !isRootId(mediaId), mediaId)
+        }
+    }
+
+//    private fun isRootId(mediaId: String) = mediaId == viewModel.rootMediaId.value
+    private fun isRootId(mediaId: String) = mediaId == "__ALBUMS__"
+
+    private fun getBrowseFragment1(mediaId: String): MediaItemFragment? {
+        return supportFragmentManager.findFragmentByTag(mediaId) as MediaItemFragment?
+    }
 
     private fun getBrowseFragment(mediaId: String): NavigationDemoFragment? {
         return supportFragmentManager.findFragmentByTag(mediaId) as NavigationDemoFragment?
