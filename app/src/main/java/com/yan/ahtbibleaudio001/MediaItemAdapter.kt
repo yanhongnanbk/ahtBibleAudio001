@@ -7,8 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.android.uamp.MediaItemData
-import com.example.android.uamp.MediaItemData.Companion.PLAYBACK_RES_CHANGED
+import com.yan.ahtbibleaudio001.MediaItemData.Companion.PLAYBACK_RES_CHANGED
 import com.yan.ahtbibleaudio001.views.fragments.MediaItemFragment
 import com.yan.ahtbibleaudio001.databinding.FragmentMediaitemBinding
 

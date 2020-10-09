@@ -11,13 +11,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.android.uamp.MediaItemData
+import com.yan.ahtbibleaudio001.MediaItemData
 import com.example.android.uamp.common.EMPTY_PLAYBACK_STATE
 import com.example.android.uamp.common.MusicServiceConnection
 import com.example.android.uamp.common.NOTHING_PLAYING
 import com.yan.ahtbibleaudio001.views.fragments.MediaItemFragment
 import com.example.android.uamp.media.extensions.id
 import com.example.android.uamp.media.extensions.isPlaying
+import com.yan.ahtbibleaudio001.R
 
 /**
  * [ViewModel] for [MediaItemFragment].

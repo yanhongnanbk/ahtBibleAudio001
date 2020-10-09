@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.uamp
+package com.yan.ahtbibleaudio001
 
 import android.net.Uri
 import android.support.v4.media.MediaBrowserCompat

@@ -32,8 +32,6 @@ class MediaItemFragment : Fragment() {
 
     private val listAdapter = MediaItemAdapter { clickedItem ->
         mainActivityViewModel.mediaItemClicked(clickedItem)
-
-
     }
 
     companion object {

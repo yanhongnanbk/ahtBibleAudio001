@@ -26,6 +26,7 @@ import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.media.MediaBrowserServiceCompat
 import com.example.android.uamp.common.MusicServiceConnection.MediaBrowserConnectionCallback
@@ -112,7 +113,7 @@ class MusicServiceConnection(context: Context, serviceComponent: ComponentName) 
             mediaController = MediaControllerCompat(context, mediaBrowser.sessionToken).apply {
                 registerCallback(MediaControllerCallback())
             }
-
+            Log.d("Blah","on connected")
             isConnected.postValue(true)
         }
 
@@ -127,6 +128,7 @@ class MusicServiceConnection(context: Context, serviceComponent: ComponentName) 
          * Invoked when the connection to the media browser failed.
          */
         override fun onConnectionFailed() {
+            Log.d("Blah","onConnectionFailed")
             isConnected.postValue(false)
         }
     }
@@ -168,6 +170,7 @@ class MusicServiceConnection(context: Context, serviceComponent: ComponentName) 
          * send it on to the other callback.
          */
         override fun onSessionDestroyed() {
+            Log.d("Blah","onSessionDestroyed=")
             mediaBrowserConnectionCallback.onConnectionSuspended()
         }
     }

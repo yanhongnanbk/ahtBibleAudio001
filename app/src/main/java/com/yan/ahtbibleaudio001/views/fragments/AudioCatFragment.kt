@@ -36,44 +36,49 @@ class AudioCatFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         Toast.makeText(requireActivity(),"${Build.VERSION.SDK_INT}",Toast.LENGTH_SHORT).show()
+        val fragmentName = arguments?.getString("fragmentName")
 
         val rootView = inflater.inflate(R.layout.fragment_audio_cat, container, false)
         val apiService: APIServiceAudio = AudioClient.getClient()
-
         audioRepository = AudioPagedListRepository(apiService)
         viewModel = getViewModel()
-
         val audioAdapter = AudioPagedListAdapter(requireActivity())
-
         val gridLayoutManager = GridLayoutManager(requireActivity(), 1)
 
-        // we want the progressbar to show the full width
-        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                val viewType = audioAdapter.getItemViewType(position)
-                if (viewType == audioAdapter.AUDIO_VIEW_TYPE) return 1    // Movie_VIEW_TYPE will occupy 1 out of 3 span
-                else return 1                                             // NETWORK_VIEW_TYPE will occupy all 3 span
+
+        if (fragmentName == "Home Fragment"){
+
+            // we want the progressbar to show the full width
+            gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    val viewType = audioAdapter.getItemViewType(position)
+                    if (viewType == audioAdapter.AUDIO_VIEW_TYPE) return 1    // Movie_VIEW_TYPE will occupy 1 out of 3 span
+                    else return 1                                             // NETWORK_VIEW_TYPE will occupy all 3 span
+                }
             }
+
+            rootView.cat_rv_audio_list.layoutManager = gridLayoutManager
+            rootView.cat_rv_audio_list.setHasFixedSize(true)
+            rootView.cat_rv_audio_list.adapter = audioAdapter
+
+            viewModel.audioPagedList.observe(requireActivity(), Observer {
+                audioAdapter.submitList(it)
+            })
+
+            viewModel.networkState.observe(requireActivity(), Observer {
+                rootView.cat_progress_bar_popular.visibility =
+                    if (viewModel.listIsEmpty() && it == NetworkState.LOADING) View.VISIBLE else View.GONE
+                rootView.cat_txt_error_popular.visibility =
+                    if (viewModel.listIsEmpty() && it == NetworkState.ERROR) View.VISIBLE else View.GONE
+
+                if (!viewModel.listIsEmpty()) {
+                    audioAdapter.setNetworkState(it)
+                }
+            })
+
         }
 
-        rootView.cat_rv_audio_list.layoutManager = gridLayoutManager
-        rootView.cat_rv_audio_list.setHasFixedSize(true)
-        rootView.cat_rv_audio_list.adapter = audioAdapter
 
-        viewModel.audioPagedList.observe(requireActivity(), Observer {
-            audioAdapter.submitList(it)
-        })
-
-        viewModel.networkState.observe(requireActivity(), Observer {
-            rootView.cat_progress_bar_popular.visibility =
-                if (viewModel.listIsEmpty() && it == NetworkState.LOADING) View.VISIBLE else View.GONE
-            rootView.cat_txt_error_popular.visibility =
-                if (viewModel.listIsEmpty() && it == NetworkState.ERROR) View.VISIBLE else View.GONE
-
-            if (!viewModel.listIsEmpty()) {
-                audioAdapter.setNetworkState(it)
-            }
-        })
         return rootView
     }
 

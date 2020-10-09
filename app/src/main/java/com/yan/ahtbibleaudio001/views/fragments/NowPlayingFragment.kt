@@ -16,6 +16,7 @@
 
 package com.example.android.uamp.fragments
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,12 +25,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.example.android.uamp.R
-import com.example.android.uamp.databinding.FragmentNowplayingBinding
-import com.example.android.uamp.utils.InjectorUtils
+import com.bumptech.glide.Glide
+import com.yan.ahtbibleaudio001.R
+import com.yan.ahtbibleaudio001.databinding.FragmentNowplayingBinding
 import com.yan.ahtbibleaudio001.viewmodels.MainActivityViewModel
 import com.yan.ahtbibleaudio001.viewmodels.NowPlayingFragmentViewModel
 import com.yan.ahtbibleaudio001.viewmodels.NowPlayingFragmentViewModel.NowPlayingMetadata
+import com.yan.ahtbibleaudio001.zutil001.utils.InjectorUtils
 
 /**
  * A fragment representing the current media item being played.

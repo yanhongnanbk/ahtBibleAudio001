@@ -3,7 +3,8 @@
     package="com.yan.ahtbibleaudio001">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity android:name=".views.activities.NavigationDemoActivity"></activity>
         <activity android:name=".views.activities.PlayAudioActivity" />
         <activity android:name=".views.activities.AudioActivity" />
         <activity android:name=".views.activities.SingleMovieActivity" />

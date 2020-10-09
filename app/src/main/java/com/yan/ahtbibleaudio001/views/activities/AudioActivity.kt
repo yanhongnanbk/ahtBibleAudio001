@@ -2,6 +2,7 @@ package com.yan.ahtbibleaudio001.views.activities
 
 import android.content.Context
 import android.content.Intent
+import android.media.AudioManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,23 +10,33 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.android.uamp.media.MusicService
 import com.yan.ahtbibleaudio001.R
 import com.yan.ahtbibleaudio001.models.drawer.NaviModel
+import com.yan.ahtbibleaudio001.viewmodels.MainActivityViewModel
 
 import com.yan.ahtbibleaudio001.views.adapters.NaviAdapter
 import com.yan.ahtbibleaudio001.views.clickEvent.ClickListener
 import com.yan.ahtbibleaudio001.views.clickEvent.RecyclerTouchListener
 import com.yan.ahtbibleaudio001.views.fragments.AudioCatFragment
 import com.yan.ahtbibleaudio001.views.fragments.AudioFragment
+import com.yan.ahtbibleaudio001.views.fragments.MediaItemFragment
+import com.yan.ahtbibleaudio001.zutil001.utils.InjectorUtils
 import kotlinx.android.synthetic.main.activity_audio.*
 
 class AudioActivity : AppCompatActivity() {
+
+    private val viewModel by viewModels<MainActivityViewModel> {
+        InjectorUtils.provideMainActivityViewModel(this)
+    }
 
     lateinit var drawerLayout: DrawerLayout
     private lateinit var adapter: NaviAdapter
@@ -188,8 +199,66 @@ class AudioActivity : AppCompatActivity() {
 
         // Set background of Drawer
         navigation_layout.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+        /********/
+        // Since UAMP is a music player, the volume controls should adjust the music volume while
+        // in the app.
+        volumeControlStream = AudioManager.STREAM_MUSIC
+
+        /**
+         * Observe [MainActivityViewModel.navigateToFragment] for [Event]s that request a
+         * fragment swap.
+         */
+        viewModel.navigateToFragment.observe(this, Observer {
+            it?.getContentIfNotHandled()?.let { fragmentRequest ->
+                val transaction = supportFragmentManager.beginTransaction()
+                transaction.replace(
+                    R.id.fragmentContainer, fragmentRequest.fragment, fragmentRequest.tag
+                )
+                if (fragmentRequest.backStack) transaction.addToBackStack(null)
+                transaction.commit()
+            }
+        })
+
+        /**
+         * Observe changes to the [MainActivityViewModel.rootMediaId]. When the app starts,
+         * and the UI connects to [MusicService], this will be updated and the app will show
+         * the initial list of media items.
+         */
+        viewModel.rootMediaId.observe(this,
+            Observer<String> { rootMediaId ->
+                rootMediaId?.let { navigateToMediaItem(it) }
+            })
+
+        /**
+         * Observe [MainActivityViewModel.navigateToMediaItem] for [Event]s indicating
+         * the user has requested to browse to a different [MediaItemData].
+         */
+        viewModel.navigateToMediaItem.observe(this, Observer {
+            it?.getContentIfNotHandled()?.let { mediaId ->
+                navigateToMediaItem(mediaId)
+            }
+        })
+
     }
 
+    /*****************************************************/
+    private fun navigateToMediaItem(mediaId: String) {
+        var fragment: MediaItemFragment? = getBrowseFragment(mediaId)
+        if (fragment == null) {
+//            fragment = MediaItemFragment.newInstance("__ALBUMS__")
+            fragment = MediaItemFragment.newInstance(mediaId)
+            // If this is not the top level media (root), we add it to the fragment
+            // back stack, so that actionbar toggle and Back will work appropriately:
+            viewModel.showFragment(fragment, !isRootId(mediaId), mediaId)
+        }
+    }
+
+    private fun isRootId(mediaId: String) = mediaId == viewModel.rootMediaId.value
+
+    private fun getBrowseFragment(mediaId: String): MediaItemFragment? {
+        return supportFragmentManager.findFragmentByTag(mediaId) as MediaItemFragment?
+    }
+    /*****************************************************/
     private fun updateAdapter(highlightItemPos: Int) {
         adapter = NaviAdapter(items, highlightItemPos)
         navigation_rv.adapter = adapter

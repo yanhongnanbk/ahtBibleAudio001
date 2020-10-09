@@ -19,10 +19,11 @@ package com.yan.ahtbibleaudio001.zutil001.utils
 import android.app.Application
 import android.content.ComponentName
 import android.content.Context
+import android.util.Log
 import com.example.android.uamp.common.MusicServiceConnection
 import com.example.android.uamp.media.MusicService
 import com.yan.ahtbibleaudio001.viewmodels.MainActivityViewModel
-import com.example.android.uamp.viewmodels.MediaItemFragmentViewModel
+import com.yan.ahtbibleaudio001.viewmodels.MediaItemFragmentViewModel
 import com.yan.ahtbibleaudio001.viewmodels.NowPlayingFragmentViewModel
 
 /**
@@ -38,6 +39,7 @@ object InjectorUtils {
 
     fun provideMainActivityViewModel(context: Context): MainActivityViewModel.Factory {
         val applicationContext = context.applicationContext
+        Log.d("Blah","provideMusicServiceConnection" + applicationContext)
         val musicServiceConnection = provideMusicServiceConnection(applicationContext)
         return MainActivityViewModel.Factory(musicServiceConnection)
     }

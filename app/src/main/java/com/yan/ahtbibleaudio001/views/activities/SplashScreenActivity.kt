@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import com.yan.ahtbibleaudio001.R
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -15,8 +16,10 @@ class SplashScreenActivity : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             //Your Code
-            startActivity(Intent(this, AudioActivity::class.java))
-
+            startActivity(Intent(this, NavigationDemoActivity::class.java))
         }, 2000)
+        finish()
+
+        Log.d("XYX","sfsfd")
     }
 }
